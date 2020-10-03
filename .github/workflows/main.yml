@@ -19,5 +19,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: tests
+      - name: Tests
         run: make test
+      - name: Build all
+        run: make build_all
