@@ -40,8 +40,8 @@ func newMockSSMClient() *mockSSMClient {
 	}
 	data := map[string]string{
 		"/bentis/test": "verySekret",
-		"hello": "goodbye",
-		"/this/that": "bongo",
+		"hello":        "goodbye",
+		"/this/that":   "bongo",
 	}
 	for k, v := range data {
 		client.secrets[k] = generateParameterOutput(k, v)
@@ -60,8 +60,8 @@ func TestGetSecret(t *testing.T) {
 
 func TestNewSSMProvider(t *testing.T) {
 	p := NewSSMProvider()
-	_, ok :=  p.Client.(*ssm.SSM)
-	if ! ok {
+	_, ok := p.Client.(*ssm.SSM)
+	if !ok {
 		t.Errorf("Expected Client to be *ssm.SSM got %T", p)
 	}
 }

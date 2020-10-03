@@ -1,0 +1,19 @@
+name: Tests
+
+env:
+  DEFAULT_BRANCH: main
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+on: push
+
+jobs:
+  tests:
+    name: Test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Tests
+        run: make test
+

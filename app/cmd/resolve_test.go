@@ -1,11 +1,11 @@
-package main
+package cmd
 
 import (
 	"reflect"
 	"testing"
 
-	"github.com/btisdall/dottr/v2/config"
-	"github.com/btisdall/dottr/v2/secrets"
+	"github.com/btisdall/dottr/v2/app/config"
+	"github.com/btisdall/dottr/v2/app/secrets"
 )
 
 type TestProvider struct{}
@@ -18,7 +18,7 @@ func getTestProvider(_ string) secrets.Provider {
 	return &TestProvider{}
 }
 
-func TestResolveSecrets(t *testing.T) {
+func TestResolve(t *testing.T) {
 	c := &config.Map{
 		"This":  "That",
 		"Apple": "Orange",
@@ -30,7 +30,7 @@ func TestResolveSecrets(t *testing.T) {
 		"hello": "dummy:goodbye",
 	}
 
-	resolved := resolveSecrets(c, getTestProvider)
+	resolved := Resolve(c, getTestProvider)
 
 	if !reflect.DeepEqual(resolved, expected) {
 		t.Errorf("Map was not correctly resolved. Got: %v, expected: %v", resolved, expected)
