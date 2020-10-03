@@ -17,7 +17,7 @@ var (
 )
 
 const (
-	ssmPrefix string = "ssm://"
+	ssmPrefix string = "aws-ssm-parameter:"
 )
 
 // SSMProvider implements an SSM secrets provider

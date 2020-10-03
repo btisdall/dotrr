@@ -1,9 +1,13 @@
 BUILD_IMAGE ?= golang:1.15.2-buster
 DOCKER_ARGS ?= --rm -v $(PWD):/build -w /build
 BASENAME ?= dottr
-COMPILER_ARGS ?= -ldflags "-X main.version=$(VERSION)" -o build/$(BASENAME)-$(GOOS)-$(GOARCH) main.go
+COMPILER_ARGS ?= -ldflags "-X main.appVersion=$(VERSION)" -o build/$(BASENAME)-$(GOOS)-$(GOARCH) main.go
 GOARCH = amd64
 VERSION ?= SNAPSHOT
+
+.PHONY: format
+format:
+	goformat -w .
 
 .PHONY: test
 test:
