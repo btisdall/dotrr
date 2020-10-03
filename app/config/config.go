@@ -29,7 +29,6 @@ func Read(file string) (Map, error) {
 	return godotenv.Read(file)
 }
 
-
 // Marshal returns a stringified Map lexically sorted by line
 func Marshal(m Map) string {
 	config := make([]string, 0)
