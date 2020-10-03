@@ -20,6 +20,7 @@ jobs:
       # Checks out a copy of your repository on the ubuntu-latest machine
       - name: Checkout code
         uses: actions/checkout@v2
+      - run: sudo sh -c 'apt-get update && apt-get -y install make'
 
 
       - uses: actions/setup-go@v2
