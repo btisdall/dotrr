@@ -11,8 +11,8 @@ func init() {
 }
 
 var (
-	appVersion = "SNAPSHOT"
-	versionCmd = &cobra.Command{
+	appVersion string = "SNAPSHOT"
+	versionCmd        = &cobra.Command{
 		Use:   "version",
 		Short: "Print the version number",
 		Run: func(cmd *cobra.Command, args []string) {

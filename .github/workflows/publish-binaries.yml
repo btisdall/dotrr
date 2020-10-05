@@ -37,4 +37,4 @@ jobs:
         goarch: ${{ matrix.goarch }}
         goversion: "https://dl.google.com/go/go1.15.2.linux-amd64.tar.gz"
         build_flags: -v
-        ldflags: -X "cmd.appVersion=${{ env.APP_VERSION }}"
+        ldflags: -X "github.com/btisdall/dotrr/v2/app/cmd.appVersion=${{ env.APP_VERSION }}"
