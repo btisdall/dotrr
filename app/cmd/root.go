@@ -8,12 +8,10 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "dottr",
-	Short: "dottr is a program for resolving secrets in dotenv files",
+	Use:   "dotrr",
+	Short: "dotrr is a program for resolving secrets in dotenv files",
 	Run: func(cmd *cobra.Command, args []string) {
-		if len(args) == 0 {
-			cmd.Help()
-		}
+		cmd.Help()
 	},
 }
 

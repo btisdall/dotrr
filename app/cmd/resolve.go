@@ -2,10 +2,11 @@ package cmd
 
 import (
 	"fmt"
-	"github.com/btisdall/dottr/v2/app/config"
-	"github.com/btisdall/dottr/v2/app/secrets"
-	"github.com/spf13/cobra"
 	"os"
+
+	"github.com/btisdall/dotrr/v2/app/config"
+	"github.com/btisdall/dotrr/v2/app/secrets"
+	"github.com/spf13/cobra"
 )
 
 func init() {

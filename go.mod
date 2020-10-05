@@ -1,4 +1,4 @@
-module github.com/btisdall/dottr/v2
+module github.com/btisdall/dotrr/v2
 
 go 1.15
 

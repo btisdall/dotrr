@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/btisdall/dottr/v2/app/cmd"
+	"github.com/btisdall/dotrr/v2/app/cmd"
 )
 
 func main() {
