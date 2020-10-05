@@ -4,8 +4,8 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/btisdall/dottr/v2/app/config"
-	"github.com/btisdall/dottr/v2/app/secrets"
+	"github.com/btisdall/dotrr/v2/app/config"
+	"github.com/btisdall/dotrr/v2/app/secrets"
 )
 
 type TestProvider struct{}
