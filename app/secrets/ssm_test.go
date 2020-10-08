@@ -2,11 +2,8 @@ package secrets
 
 import (
 	"testing"
-	"time"
 
 	"github.com/aws/aws-sdk-go/aws"
-
-	// "github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/ssm"
 	"github.com/aws/aws-sdk-go/service/ssm/ssmiface"
 )
@@ -18,13 +15,7 @@ type mockSSMClient struct {
 
 func generateParameterOutput(name, value string) *ssm.Parameter {
 	return &ssm.Parameter{
-		ARN:              aws.String("arn:aws:ssm:eu-west-1:111111111111:parameter/" + value),
-		DataType:         aws.String("text"),
-		LastModifiedDate: aws.Time(time.Now()),
-		Name:             aws.String(name),
-		Type:             aws.String("SecureString"),
-		Value:            aws.String(value),
-		Version:          aws.Int64(1),
+		Value: aws.String(value),
 	}
 }
 
