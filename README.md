@@ -2,30 +2,27 @@
 
 Populate secrets in a dotenv file from secret providers such as AWS SSM Parameter Store.
 
-<!-- [![Build Status][travis-image]][travis-url]
-[![Downloads Stats][npm-downloads]][npm-url] -->
-
-## Installation
-
-This project uses go modules, so `go run` or `go build` will take care of resolving any dependencies.
-
-## Building the project.
-
-Please inspect the [Makefile](./Makefile) to see the various build options. As an example, to build for macOS via
-Docker:
-
-```shell
-make build_darwin
+```
+dottr resolve file.tmpl > dev.env
 ```
 
 ## Precompiled binaries
 
-Precompiled binaries are available from the releases page. _macOS binaries are not notarized, downloading and extracting
+Precompiled binaries are available from the releases page.
+
+### macOS
+
+_macOS binaries are not notarized, downloading and extracting
 with command line tools should avoid any problems._
 
+If the binary has been downloaded via browser you can first run the binary by
+the Finder context menu, or run the following from the command line:
+
 ```shell
-xattr -d com.apple.quarantine FILE
+xattr -d com.apple.quarantine <FILE>
 ```
+
+Alternatively, see [Building the Project](#building-the-project) below.
 
 ## Usage example
 
@@ -56,23 +53,32 @@ VAR4="aws-ssm-parameter:some_more_text"
 
 ```
 
-* `VAR1` and `VAR2` are resolved from SSM Parameter store parameters since they
-are prefixed with `aws-ssm-parameter:` in the template.
-* `VAR3` is left untouched as it has no prefix.
-* `VAR4` is resolved to the literal text supplied minus the double-slash escape.
+- `VAR1` and `VAR2` are resolved from SSM Parameter store parameters since they
+  are prefixed with `aws-ssm-parameter:` in the template.
+- `VAR3` is left untouched as it has no prefix.
+- `VAR4` is resolved to the literal text supplied minus the double-slash escape.
 
-## Meta
-
-Ben Tisdall – [@btisdall](https://twitter.com/btisdall – ben@tisdall.org.uk
-
-Distributed under the MIT license. See ``LICENSE`` for more information.
-
-[https://github.com/btisdall/github-link](https://github.com/btisdall)
-
-## Secret Providers
+## Supported Secret Providers
 
 Currently only SSM Parameter Store is supported, but adding other providers
 should be straightforward.
+
+## Installation
+
+This project uses go modules, so `go run` or `go build` will take care of resolving any dependencies.
+
+## Building the project.
+
+Please inspect the [Makefile](./Makefile) to see the various build options. As an example, to build for macOS via
+Docker:
+
+```shell
+make build_darwin
+```
+
+## license
+
+Distributed under the MIT license. See `LICENSE` for more information.
 
 ## Contributing
 
@@ -82,3 +88,9 @@ should be straightforward.
    your changes are covered by tests where possible.
 4. Push to the branch (`git push origin feature/fooBar`)
 5. Create a new Pull Request
+
+## Contact
+
+Ben Tisdall – [@btisdall](https://twitter.com/btisdall) – ben@tisdall.org.uk
+
+Project Link: [https://github.com/btisdall/dotrr](https://github.com/btisdall/dotrr)
