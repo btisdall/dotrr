@@ -11,7 +11,6 @@ import (
 
 var (
 	ssmProvider *SSMProvider
-	// once        sync.Once
 )
 
 const (
