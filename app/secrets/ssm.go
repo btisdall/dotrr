@@ -9,10 +9,6 @@ import (
 	"github.com/aws/aws-sdk-go/service/ssm/ssmiface"
 )
 
-var (
-	ssmProvider *SSMProvider
-)
-
 const (
 	ssmPrefix string = "aws-ssm-parameter:"
 )
