@@ -1,38 +1,22 @@
 # dotrr
 
-Populate secrets in a dotenv file from secret providers such as AWS SSM Parameter Store.
+Populate secrets in a dotenv file from secret providers. Currently supported providers are:
 
-```
-dottr resolve file.tmpl > dev.env
-```
+* AWS SSM Parameter Store
+* AWS Secrets Manager
 
-## Precompiled binaries
+## Installing dotrr
 
-Precompiled binaries are available from the releases page.
+Precompiled binaries are available from the [releases page](https://github.com/btisdall/dotrr/releases/latest). Alternatively, see [Building the Project](#building-the-project) below.
 
-### macOS
+## Usage
 
-_macOS binaries are not notarized, downloading and extracting
-with command line tools should avoid any problems._
-
-If the binary has been downloaded via browser you can first run the binary by
-the Finder context menu, or run the following from the command line:
-
-```shell
-xattr -d com.apple.quarantine <FILE>
-```
-
-Alternatively, see [Building the Project](#building-the-project) below.
-
-## Usage example
-
-1. Given a dotenv file name `local.env/tmpl` with these contents:
+1. Given a dotenv file name `local.env.tmpl` with these contents:
 
 ```
 VAR1=aws-ssm-parameter:db-password
-VAR2=aws-ssm-parameter:/another/password
-VAR3=just_some_plain_text
-VAR4=\\aws-ssm-parameter:some more text
+VAR2=aws-secretsmanager-secret:api-key
+VAR3=not_a_secret
 ```
 
 2. And you have valid AWS credentials in your AWS credential chain.
@@ -46,28 +30,31 @@ $ dotrr resolve local.env/tmpl
 4. The following will be output to stdout:
 
 ```
-VAR1="The_secret_stored_in_SSM_parameter_db-password"
-VAR2="The_secret_stored_in_SSM_parameter_/another/password"
-VAR2="just_some_plain_text"
-VAR4="aws-ssm-parameter:some_more_text"
-
+VAR1="The secret from the SSM Parameter named db-password"
+VAR2="The secret from Secrets Manager secret named api-key"
+VAR2="not_a_secret"
 ```
 
-- `VAR1` and `VAR2` are resolved from SSM Parameter store parameters since they
-  are prefixed with `aws-ssm-parameter:` in the template.
-- `VAR3` is left untouched as it has no prefix.
-- `VAR4` is resolved to the literal text supplied minus the double-slash escape.
+- `VAR1` is resolved from SSM Parameter store since it is prefixed with `aws-ssm-parameter:` in the template.
+- `VAR2` is resolved from Secrets Manager since it is prefixed with `aws-secretsmanager-secret:` in the template.
+- `VAR3` is left untouched as it has no known resolver prefix.
 
-## Supported Secret Providers
+Note that items that collide with a resolver prefix can be double backslash
+escaped to produce their intended form in the output, eg:
 
-Currently only SSM Parameter Store is supported, but adding other providers
-should be straightforward.
+```
+VAR4=\\aws-secretsmanager-secret:some-text
+```
 
-## Installation
+Results in:
 
-This project uses go modules, so `go run` or `go build` will take care of resolving any dependencies.
+```
+VAR4="aws-secretsmanager-secret:some-text"
+```
 
 ## Building the project.
+
+This project uses go modules, so `go run` or `go build` will take care of resolving any dependencies.
 
 Please inspect the [Makefile](./Makefile) to see the various build options. As an example, to build for macOS via
 Docker:
@@ -76,7 +63,7 @@ Docker:
 make build_darwin
 ```
 
-## license
+## License
 
 Distributed under the MIT license. See `LICENSE` for more information.
 
@@ -84,8 +71,8 @@ Distributed under the MIT license. See `LICENSE` for more information.
 
 1. Fork it (<https://github.com/yourname/yourproject/fork>)
 2. Create your feature branch (`git checkout -b feature/fooBar`)
-3. Commit your changes (`git commit -am 'Add some fooBar'`). Please make sure
-   your changes are covered by tests where possible.
+3. Commit your changes (`git commit -am 'Add some fooBar'`). Please make sure your changes are covered by tests where
+   possible.
 4. Push to the branch (`git push origin feature/fooBar`)
 5. Create a new Pull Request
 

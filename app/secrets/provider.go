@@ -35,6 +35,8 @@ func GetProvider(key string) Provider {
 	switch {
 	case strings.HasPrefix(key, ssmPrefix):
 		return NewSSMProvider()
+	case strings.HasPrefix(key, secretsManagerPrefix):
+		return NewSecretsManagerProvider()
 	case strings.HasPrefix(key, escapePrefix):
 		return &EscapeProvider{}
 	default:
