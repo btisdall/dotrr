@@ -10,38 +10,25 @@ import (
 
 type mockSSMClient struct {
 	ssmiface.SSMAPI
-	secrets map[string]*ssm.Parameter
-}
-
-func generateParameterOutput(name, value string) *ssm.Parameter {
-	return &ssm.Parameter{
-		Value: aws.String(value),
-	}
+	value string
 }
 
 func (m *mockSSMClient) GetParameter(input *ssm.GetParameterInput) (*ssm.GetParameterOutput, error) {
 	return &ssm.GetParameterOutput{
-		Parameter: m.secrets[*input.Name],
+		Parameter: &ssm.Parameter{
+			Value: aws.String(m.value),
+		},
 	}, nil
 }
 
-func newMockSSMClient() *mockSSMClient {
-	client := mockSSMClient{
-		secrets: make(map[string]*ssm.Parameter),
+func newMockSSMClient(value string) *mockSSMClient {
+	return &mockSSMClient{
+		value: value,
 	}
-	data := map[string]string{
-		"/bentis/test": "verySekret",
-		"hello":        "goodbye",
-		"/this/that":   "bongo",
-	}
-	for k, v := range data {
-		client.secrets[k] = generateParameterOutput(k, v)
-	}
-	return &client
 }
 
 func TestGetSecret(t *testing.T) {
-	p := SSMProvider{Client: newMockSSMClient()}
+	p := SSMProvider{Client: newMockSSMClient("verySekret")}
 	secret, _ := p.GetSecret("/bentis/test")
 	expected := "verySekret"
 	if secret != expected {
