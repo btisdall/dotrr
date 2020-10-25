@@ -1,10 +1,10 @@
 package secrets
 
 import (
-	"fmt"
 	"sync"
 
 	"github.com/aws/aws-sdk-go/aws/session"
+	"github.com/btisdall/dotrr/v2/app/util"
 )
 
 var (
@@ -20,7 +20,7 @@ func NewAwsSession() *session.Session {
 			SharedConfigState: session.SharedConfigEnable,
 		})
 		if error != nil {
-			panic(fmt.Sprintf("Couldn't create AWS session: %s", error))
+			util.Er("Couldn't create AWS session", error)
 		}
 	})
 	return awsSession
