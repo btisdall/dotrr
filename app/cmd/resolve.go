@@ -6,6 +6,7 @@ import (
 
 	"github.com/btisdall/dotrr/v2/app/config"
 	"github.com/btisdall/dotrr/v2/app/secrets"
+	"github.com/btisdall/dotrr/v2/app/util"
 	"github.com/spf13/cobra"
 )
 
@@ -14,13 +15,13 @@ func init() {
 }
 
 var resolveCmd = &cobra.Command{
-	Use:   "resolve",
+	Use:   "resolve TEMPLATE",
 	Short: "Resolve secrets from a dotenv template file",
+	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		content, err := config.Read(args[0])
 		if err != nil {
-			fmt.Printf("Error reading dotenv file: %s\n", err)
-			os.Exit(1)
+			util.Er("Error reading dotenv file", err)
 		}
 		resolved := Resolve(&content, secrets.GetProvider)
 		fmt.Printf("%v\n", config.Marshal(resolved))
